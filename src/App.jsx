@@ -116,6 +116,9 @@ function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [analyticsMode, setAnalyticsMode] = useState('batting')
   const [activeReel, setActiveReel] = useState(null)
+  const [videoConsent, setVideoConsent] = useState(() => (
+    typeof window !== 'undefined' && window.localStorage.getItem('msd-video-previews') === 'enabled'
+  ))
   const [scrollProgress, setScrollProgress] = useState(0)
   const [analyticsVisible, setAnalyticsVisible] = useState(false)
   const analyticsRef = useRef(null)
@@ -183,6 +186,18 @@ function App() {
     return () => observer.disconnect()
   }, [loading])
 
+  const enableVideoPreviews = () => {
+    window.localStorage.setItem('msd-video-previews', 'enabled')
+    setVideoConsent(true)
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.reel-card video').forEach(video => {
+        video.muted = true
+        const playRequest = video.play()
+        if (playRequest) playRequest.catch(() => {})
+      })
+    })
+  }
+
   useEffect(() => {
     if (!activeReel) return
     const previousOverflow = document.body.style.overflow
@@ -210,7 +225,7 @@ function App() {
 
   // Mobile browsers require an explicit muted play attempt for reliable autoplay.
   useEffect(() => {
-    if (loading) return
+    if (loading || !videoConsent) return
     const videos = Array.from(document.querySelectorAll('.reel-card video'))
     if (!videos.length) return
     const observer = new IntersectionObserver((entries) => {
@@ -230,7 +245,7 @@ function App() {
       observer.observe(video)
     })
     return () => observer.disconnect()
-  }, [loading])
+  }, [loading, videoConsent])
 
   return (
     <>
@@ -348,6 +363,15 @@ function App() {
               <div className="section-label">In Action</div>
               <h2 className="section-title">The Reel</h2>
               <p className="section-desc">Watch the variations in action — mystery spin, deceptive flight, and the power hitting that changes game momentum.</p>
+              {!videoConsent && (
+                <div className="video-consent" role="note">
+                  <div>
+                    <strong>Enable video previews</strong>
+                    <span>One tap starts muted previews on this device.</span>
+                  </div>
+                  <button type="button" onClick={enableVideoPreviews}>Enable</button>
+                </div>
+              )}
             </div>
           </div>
           <div className="container">
