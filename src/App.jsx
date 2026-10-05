@@ -193,6 +193,30 @@ function App() {
     return () => { clearTimeout(timer); window.removeEventListener('scroll', handleScroll) }
   }, [])
 
+  // Mobile browsers require an explicit muted play attempt for reliable autoplay.
+  useEffect(() => {
+    if (loading) return
+    const videos = Array.from(document.querySelectorAll('.reel-card video'))
+    if (!videos.length) return
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        const video = target
+        video.muted = true
+        if (isIntersecting) {
+          const playRequest = video.play()
+          if (playRequest) playRequest.catch(() => {})
+        } else {
+          video.pause()
+        }
+      })
+    }, { threshold: 0.15 })
+    videos.forEach(video => {
+      video.muted = true
+      observer.observe(video)
+    })
+    return () => observer.disconnect()
+  }, [loading])
+
   return (
     <>
       {/* SCROLL PROGRESS */}
