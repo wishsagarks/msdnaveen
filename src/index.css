@@ -741,7 +741,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .play-icon { width: 56px; height: 56px; }
   .play-icon::after { border-left: 16px solid var(--navy-deep); border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
 }
-@media (min-width: 900px) { .reel-grid { gap: 20px; } }
+@media (min-width: 900px) {
+  .reel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .reel-card.wide {
+    grid-column: span 1;
+    aspect-ratio: 9 / 13;
+    min-height: 0;
+    max-height: none;
+  }
+}
 
 /* ================================================================
    SKILLS SECTION
@@ -1648,14 +1659,14 @@ body::before {
   .hero-title { font-size: clamp(82px, 9.6vw, 122px); }
   .hero-content { max-width: 780px; }
   .reel-grid { gap: 14px; }
-  .reel-card.wide { aspect-ratio: 16 / 8; min-height: 390px; }
+  .reel-card.wide { aspect-ratio: 9 / 13; }
   .reel-card.tall { aspect-ratio: 9 / 13; }
 }
 
 @media (min-width: 1200px) {
   .hero-title { max-width: 1040px; }
   .reel-grid { gap: 22px; max-width: 1180px; margin-inline: auto; }
-  .reel-card.wide { aspect-ratio: 16 / 8; min-height: 470px; max-height: 560px; }
+  .reel-card.wide { aspect-ratio: 9 / 13; }
   .reel-card.tall { aspect-ratio: 9 / 13; max-height: 620px; }
 }
 
