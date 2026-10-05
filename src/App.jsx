@@ -47,15 +47,7 @@ const experience = [
   { league: 'District Level Tournaments', format: 'Various', tag: '2015 — 2019' },
 ]
 
-const analyticsData = {
-  '7d': { matches: 3, runs: 112, sr: 165.5, sixes: 9, wickets: 5, econ: 6.2, best: '3/24', winRate: 66 },
-  '30d': { matches: 8, runs: 340, sr: 152.0, sixes: 22, wickets: 14, econ: 6.8, best: '4/18', winRate: 75 },
-  '6m': { matches: 24, runs: 850, sr: 148.5, sixes: 58, wickets: 42, econ: 7.1, best: '5/22', winRate: 62 },
-  '1y': { matches: 45, runs: 1240, sr: 145.2, sixes: 85, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 }
-}
-
-const analyticsTimeframes = ['7d', '30d', '6m', '1y']
-const analyticsLabels = { '7d': '7 Days', '30d': '30 Days', '6m': '6 Months', '1y': '1 Year' }
+const overallStats = { matches: 45, runs: 1240, sr: 145.2, sixes: 85, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 }
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -89,12 +81,11 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [navScrolled, setNavScrolled] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  const [timeframe, setTimeframe] = useState('30d')
   const [scrollProgress, setScrollProgress] = useState(0)
   const [analyticsVisible, setAnalyticsVisible] = useState(false)
   const analyticsRef = useRef(null)
 
-  const currentStats = analyticsData[timeframe]
+  const currentStats = overallStats
 
   const animRuns = useAnimatedCounter(currentStats.runs, analyticsVisible)
   const animSr = useAnimatedCounter(currentStats.sr, analyticsVisible, 1)
@@ -103,7 +94,7 @@ function App() {
   const animSixes = useAnimatedCounter(currentStats.sixes, analyticsVisible)
   const animWinRate = useAnimatedCounter(currentStats.winRate, analyticsVisible)
 
-  const chartCategories = analyticsTimeframes.map(tf => analyticsLabels[tf])
+  const chartCategories = ['Runs', 'Wickets', 'Sixes', 'Matches']
   const chartOptions = {
     chart: { type: 'areaspline', backgroundColor: 'transparent', height: 270, spacing: [16, 10, 10, 10] },
     title: { text: null },
@@ -124,30 +115,21 @@ function App() {
     tooltip: { shared: true, backgroundColor: '#10231e', borderColor: 'rgba(255,179,71,0.45)', style: { color: '#f6f3e9' } },
     plotOptions: { series: { lineWidth: 2, marker: { radius: 3, lineWidth: 2, lineColor: '#10231e' } }, areaspline: { fillOpacity: 0.12 } },
     series: [
-      { name: 'Runs', color: '#ffb347', data: analyticsTimeframes.map(tf => analyticsData[tf].runs) },
-      { name: 'Wickets', color: '#4fa57a', data: analyticsTimeframes.map(tf => analyticsData[tf].wickets) }
+      { name: 'Overall total', color: '#ffb347', data: [currentStats.runs, currentStats.wickets, currentStats.sixes, currentStats.matches] }
     ]
   }
   const impactChartOptions = {
     chart: { type: 'column', backgroundColor: 'transparent', height: 270, spacing: [16, 10, 10, 10] },
     title: { text: null }, credits: { enabled: false }, exporting: { enabled: false },
-    xAxis: { categories: chartCategories, lineColor: 'rgba(226,239,225,0.12)', tickColor: 'transparent', labels: { style: { color: '#aab9af', fontSize: '11px' } } },
+    xAxis: { categories: ['Strike rate', 'Economy', 'Win rate'], lineColor: 'rgba(226,239,225,0.12)', tickColor: 'transparent', labels: { style: { color: '#aab9af', fontSize: '11px' } } },
     yAxis: { title: { text: null }, gridLineColor: 'rgba(226,239,225,0.08)', labels: { style: { color: '#80968a', fontSize: '10px' } } },
     legend: { itemStyle: { color: '#d9e3d9', fontWeight: '500' }, itemHoverStyle: { color: '#ffb347' } },
     tooltip: { shared: true, backgroundColor: '#10231e', borderColor: 'rgba(255,179,71,0.45)', style: { color: '#f6f3e9' } },
     plotOptions: { column: { borderWidth: 0, borderRadius: 3, groupPadding: 0.14, pointPadding: 0.08 } },
     series: [
-      { name: 'Strike rate', color: '#e8cf73', data: analyticsTimeframes.map(tf => analyticsData[tf].sr) },
-      { name: 'Economy', color: '#8cc9df', data: analyticsTimeframes.map(tf => analyticsData[tf].econ) }
+      { name: 'Overall rate', color: '#e8cf73', data: [currentStats.sr, currentStats.econ, currentStats.winRate] }
     ]
   }
-
-  // Reset counters when timeframe changes
-  useEffect(() => {
-    setAnalyticsVisible(false)
-    const t = setTimeout(() => setAnalyticsVisible(true), 50)
-    return () => clearTimeout(t)
-  }, [timeframe])
 
   useEffect(() => {
     if (loading) return
@@ -371,22 +353,10 @@ function App() {
             <div className="section-header reveal">
               <div className="section-label">Performance</div>
               <h2 className="section-title">By the Numbers</h2>
-              <p className="section-desc">Real match data from CricHeroes. Performance across competitive leagues and formats.</p>
+              <p className="section-desc">Overall match data from CricHeroes across competitive leagues and formats.</p>
             </div>
 
             <div className="analytics-container reveal-scale" ref={analyticsRef}>
-              <div className="timeframe-row">
-                {analyticsTimeframes.map(tf => (
-                  <button
-                    key={tf}
-                    className={`tf-btn${timeframe === tf ? ' active' : ''}`}
-                    onClick={() => setTimeframe(tf)}
-                  >
-                    {analyticsLabels[tf]}
-                  </button>
-                ))}
-              </div>
-
               <div className="analytics-grid">
                 <div className="ac ac--saffron">
                   <span className="ac-label">Runs Scored</span>
@@ -416,11 +386,11 @@ function App() {
 
               <div className="chart-row">
                 <div className="chart-shell">
-                  <div className="chart-heading">Scoring trend</div>
+                  <div className="chart-heading">Overall totals</div>
                   <HighchartsReact highcharts={Highcharts} options={chartOptions} />
                 </div>
                 <div className="chart-shell">
-                  <div className="chart-heading">Impact profile</div>
+                  <div className="chart-heading">Overall rates</div>
                   <HighchartsReact highcharts={Highcharts} options={impactChartOptions} />
                 </div>
               </div>
