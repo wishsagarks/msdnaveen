@@ -41,10 +41,12 @@ const skills = [
 ]
 
 const experience = [
-  { league: 'Andhra Premier League (APL)', format: 'T20', tag: '2023 — Present' },
-  { league: 'Hyderabad Cricket Association (HCA) A Division', format: 'Multi-Day & T20', tag: '2020 — Present' },
-  { league: 'South Zone Inter-University', format: 'T20', tag: '2019 — 2022' },
-  { league: 'District Level Tournaments', format: 'Various', tag: '2015 — 2019' },
+  { league: 'KSCA', format: '2 & 3-Day Leagues', tag: 'League cricket' },
+  { league: 'HCA', format: '3-Day Leagues', tag: 'League cricket' },
+  { league: 'HCA', format: 'T20 Leagues', tag: 'League cricket' },
+  { league: 'APL', format: 'APL Leagues', tag: 'League cricket' },
+  { league: 'Net Bowler — Royals of Rayalaseema', format: 'RPL 2026', tag: 'Net bowler' },
+  { league: 'Net Bowler — Mysuru Warriors', format: 'KPL 2020', tag: 'Net bowler' },
 ]
 
 const overallStats = { matches: 45, runs: 1240, sr: 145.2, sixes: 85, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 }
@@ -440,7 +442,7 @@ function App() {
             <div className="section-header reveal">
               <div className="section-label">Journey</div>
               <h2 className="section-title">Experience</h2>
-              <p className="section-desc">Tested in competitive leagues and high-pressure situations across multiple formats.</p>
+              <p className="section-desc">League cricket across Karnataka and Hyderabad, plus professional net-bowling assignments.</p>
             </div>
             <div className="exp-list">
               {experience.map((exp, i) => (
