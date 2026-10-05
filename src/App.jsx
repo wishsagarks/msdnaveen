@@ -318,22 +318,6 @@ function App() {
                   Talk cricket <span className="arrow">↗</span>
                 </a>
               </div>
-              <div className="hero-stats reveal">
-                <div className="hero-stat">
-                  <span className="hero-stat-num">11+</span>
-                  <span className="hero-stat-label">Years Pro</span>
-                </div>
-                <div className="hero-stat-divider" />
-                <div className="hero-stat">
-                  <span className="hero-stat-num">45+</span>
-                  <span className="hero-stat-label">Matches / yr</span>
-                </div>
-                <div className="hero-stat-divider" />
-                <div className="hero-stat">
-                  <span className="hero-stat-num">APL</span>
-                  <span className="hero-stat-label">League Player</span>
-                </div>
-              </div>
             </div>
           </div>
           <div className="hero-scroll-hint" aria-hidden="true">
