@@ -12,8 +12,8 @@ const navLinks = [
 ]
 
 const reels = [
-  { id: 1, type: 'wide', label: 'Match Highlights', src: '/videos/match_highlights.mp4', poster: '/images/reel-1.jpg', alt: 'Match highlights from the boundary' },
-  { id: 2, type: 'tall', label: 'Mystery Spin', src: '/videos/mastery_spin.mp4', poster: '/images/reel-2.jpg', alt: 'Mystery spin bowling action' },
+  { id: 1, type: 'wide', label: 'Mystery Spin', src: '/videos/match_highlights.mp4', poster: '/images/reel-1.jpg', alt: 'Mystery spin bowling action' },
+  { id: 2, type: 'tall', label: 'Mystery Spin 2', src: '/videos/mastery_spin.mp4', poster: '/images/reel-2.jpg', alt: 'Second mystery spin bowling variation' },
   { id: 3, type: 'tall', label: 'Power Hitting', src: '/videos/power_hitting.mp4', poster: '/images/reel-3.jpg', alt: 'Power hitting at the crease' },
   { id: 4, type: 'tall', label: 'Net Session', src: '/videos/next_session.mp4', poster: '/images/reel-4.jpg', alt: 'Focused net session practice' },
   { id: 5, type: 'tall', label: 'Bowling Variations', src: '/videos/bowling_variation.mp4', poster: '/images/reel-5.jpg', alt: 'Bowling variations in action' },
