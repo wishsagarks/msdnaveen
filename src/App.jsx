@@ -115,6 +115,7 @@ function App() {
   const [navScrolled, setNavScrolled] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [analyticsMode, setAnalyticsMode] = useState('batting')
+  const [activeReel, setActiveReel] = useState(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [analyticsVisible, setAnalyticsVisible] = useState(false)
   const analyticsRef = useRef(null)
@@ -181,6 +182,20 @@ function App() {
     }
     return () => observer.disconnect()
   }, [loading])
+
+  useEffect(() => {
+    if (!activeReel) return
+    const previousOverflow = document.body.style.overflow
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setActiveReel(null)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [activeReel])
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2200)
@@ -342,6 +357,16 @@ function App() {
                   key={reel.id}
                   className={`reel-card ${reel.type} reveal-scale reel-card--mobile`}
                   style={{ transitionDelay: `${i * 0.08}s` }}
+                  role="button"
+                  tabIndex="0"
+                  aria-label={`Open ${reel.label}`}
+                  onClick={() => setActiveReel(reel)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      setActiveReel(reel)
+                    }
+                  }}
                 >
                   <span className="reel-label">{reel.label}</span>
                   <video
@@ -537,6 +562,26 @@ function App() {
             </div>
           </div>
         </footer>
+
+        {activeReel && (
+          <div className="video-modal" role="dialog" aria-modal="true" aria-label={activeReel.label} onClick={() => setActiveReel(null)}>
+            <div className="video-modal-panel" onClick={(event) => event.stopPropagation()}>
+              <button className="video-modal-close" type="button" aria-label="Close video" onClick={() => setActiveReel(null)}>
+                <span aria-hidden="true">×</span>
+              </button>
+              <p className="video-modal-label">{activeReel.label}</p>
+              <video
+                src={activeReel.src}
+                poster={activeReel.poster}
+                autoPlay
+                controls
+                playsInline
+                preload="auto"
+                aria-label={activeReel.alt}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

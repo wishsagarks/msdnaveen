@@ -624,7 +624,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   overflow: hidden;
   background: var(--navy-mid);
   border: 1px solid var(--line-subtle);
-  cursor: default;
+  cursor: pointer;
   transition: transform 0.45s var(--ease-expo), box-shadow 0.45s var(--ease-expo);
 }
 .reel-card:hover {
@@ -641,6 +641,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .reel-card:hover video {
   transform: scale(1.035);
   filter: saturate(1.08) contrast(1.03);
+}
+.reel-card:focus-visible {
+  outline: 2px solid var(--saffron);
+  outline-offset: 4px;
 }
 .reel-label {
   position: absolute; top: 10px; left: 10px;
@@ -1439,6 +1443,70 @@ body::before {
   text-transform: uppercase;
 }
 .highcharts-container { width: 100% !important; }
+
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(2, 8, 6, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: modalFadeIn 0.22s ease both;
+}
+.video-modal-panel {
+  position: relative;
+  width: min(960px, 100%);
+  max-height: calc(100svh - 48px);
+  padding: 18px;
+  border: 1px solid rgba(255, 179, 71, 0.28);
+  border-radius: 14px;
+  background: #07130f;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.58);
+}
+.video-modal-panel video {
+  display: block;
+  width: 100%;
+  max-height: calc(100svh - 130px);
+  object-fit: contain;
+  border-radius: 8px;
+  background: #020806;
+}
+.video-modal-label {
+  margin: 0 48px 12px 2px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.video-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(246, 243, 233, 0.25);
+  border-radius: 50%;
+  color: var(--text-primary);
+  background: rgba(7, 19, 15, 0.84);
+  font-size: 27px;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s var(--ease-back);
+}
+.video-modal-close:hover { color: var(--navy-deep); background: var(--saffron); transform: rotate(90deg); }
+@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 600px) {
+  .video-modal { padding: 12px; }
+  .video-modal-panel { padding: 12px; border-radius: 10px; }
+  .video-modal-panel video { max-height: calc(100svh - 94px); border-radius: 6px; }
+  .video-modal-label { font-size: 18px; margin-bottom: 9px; }
+}
 
 @media (min-width: 640px) {
   .chart-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
