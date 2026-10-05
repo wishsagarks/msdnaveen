@@ -50,6 +50,7 @@ const experience = [
 
 const analyticsProfiles = {
   batting: {
+    label: 'Batting',
     stats: { matches: 319, runs: 5172, sr: 124.63, sixes: 302, wickets: 0, econ: 0, best: '148', winRate: 58 },
     metrics: [
       ['Mat', '319'], ['Inns', '248'], ['NO', '71'], ['Runs', '5172'], ['HS', '148'], ['Avg', '29.22'],
@@ -62,6 +63,7 @@ const analyticsProfiles = {
     rateValues: [124.63, 29.22, 58]
   },
   bowling: {
+    label: 'Bowling',
     stats: { matches: 319, runs: 6903, sr: 22.92, sixes: 115, wickets: 286, econ: 6.32, best: '7/31', winRate: 58 },
     metrics: [['Mat', '319'], ['Inns', '297'], ['Overs', '1092.4'], ['Maidens', '55'], ['Runs', '6903'], ['Wkts', '286'], ['BB', '7/31'], ['3 Wkts', '22'], ['5 Wkts', '3'], ['Eco', '6.32'], ['SR', '22.92'], ['Avg', '24.14'], ['WD', '732'], ['NB', '117'], ['Dots', '3877'], ['4s', '735'], ['6s', '115']],
     totals: ['Matches', 'Wickets', 'Best figures', 'Economy'],
@@ -70,6 +72,7 @@ const analyticsProfiles = {
     rateValues: [286, 6.32, 22.92]
   },
   fielding: {
+    label: 'Fielding',
     stats: { matches: 319, runs: 0, sr: 0, sixes: 0, wickets: 0, econ: 0, best: '—', winRate: 58 },
     metrics: [['Mat', '319'], ['Catches', '151'], ['C.B', '2'], ['R/O', '35'], ['St', '3'], ['Asst. R/O', '14'], ['Byes', '8']],
     totals: ['Matches', 'Catches', 'Run outs', 'Stumpings'],
@@ -415,11 +418,11 @@ function App() {
 
               <div className="chart-row">
                 <div className="chart-shell">
-                  <div className="chart-heading">Overall totals</div>
+                  <div className="chart-heading">{activeProfile.label} totals</div>
                   <HighchartsReact highcharts={Highcharts} options={chartOptions} />
                 </div>
                 <div className="chart-shell">
-                  <div className="chart-heading">Overall rates</div>
+                  <div className="chart-heading">{activeProfile.label} rates</div>
                   <HighchartsReact highcharts={Highcharts} options={impactChartOptions} />
                 </div>
               </div>
