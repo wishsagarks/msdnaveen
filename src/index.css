@@ -1593,3 +1593,76 @@ body::after {
     rgba(19, 136, 8, 0.1) 100%
   );
 }
+
+/* Mobile composition: compact scorecard rhythm, generous touch targets, and clearer sequencing. */
+@media (max-width: 767px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+  .nav-wrapper { top: 10px; padding: 0 10px; }
+  .navbar {
+    min-height: 54px;
+    padding: 10px 15px;
+    border-radius: 16px;
+  }
+  .navbar-brand { font-size: 17px; }
+  .brand-mark { width: 27px; height: 27px; }
+  .hero { min-height: 100svh; }
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+    padding-bottom: 44px;
+  }
+  .hero-badge { margin-bottom: 20px; font-size: 10px; }
+  .hero-title {
+    width: 100%;
+    font-size: clamp(49px, 14.6vw, 74px);
+    line-height: 0.94;
+    letter-spacing: 0.015em;
+    margin-bottom: 22px;
+  }
+  .hero-title .indent-1 { margin-left: 5%; }
+  .hero-title .indent-2 { margin-left: 11%; }
+  .hero-desc {
+    max-width: 350px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .cta-row { width: 100%; gap: 8px; margin-bottom: 0; }
+  .cta-row .btn-pill {
+    flex: 1;
+    justify-content: space-between;
+    min-width: 0;
+    padding-left: 15px;
+    font-size: 13px;
+  }
+  .cta-row .btn-pill .arrow { width: 27px; height: 27px; }
+  .section { padding: 66px 0; }
+  .section-header { margin-bottom: 28px; }
+  .section-title { font-size: clamp(36px, 11vw, 52px); }
+  .section-desc { font-size: 14px; line-height: 1.6; }
+
+  .reel-grid { gap: 8px; }
+  .reel-card--mobile { border-radius: 8px; }
+  .reel-label { top: 8px; left: 8px; padding: 5px 8px; font-size: 8px; letter-spacing: 0.7px; }
+
+  .analytics-container { padding: 16px 12px; border-radius: 12px; }
+  .analytics-tabs { margin: 0 -2px 22px; }
+  .analytics-tab { min-height: 40px; font-size: 13px; }
+  .analytics-overall-heading { margin-bottom: 12px; }
+  .analytics-overall-heading h3 { font-size: 28px; }
+  .analytics-overall-heading span { font-size: 10px; }
+  .metric-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .metric-card { min-height: 82px; border-radius: 7px; }
+  .metric-card strong { font-size: clamp(24px, 7vw, 31px); }
+  .metric-card span { font-size: 10px; }
+  .chart-row { gap: 10px; margin: 20px 0; }
+  .chart-shell { border-radius: 8px; }
+  .chart-heading { padding: 13px 12px 0; font-size: 17px; }
+  .analytics-summary { gap: 16px; padding-top: 17px; }
+
+  .contact-card { padding: 28px 18px; border-radius: 12px; }
+  .contact-heading { font-size: 32px; }
+  .contact-actions .btn-pill { min-height: 46px; }
+}
