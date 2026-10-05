@@ -658,6 +658,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 1px solid rgba(255,153,51,0.2);
   pointer-events: none; z-index: 1;
 }
+.video-tap-hint {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  z-index: 2;
+  padding: 5px 9px;
+  border: 1px solid rgba(246, 243, 233, 0.24);
+  border-radius: var(--r-pill);
+  color: var(--text-primary);
+  background: rgba(4, 17, 13, 0.74);
+  font-size: 10px;
+  font-weight: 700;
+}
 .video-consent {
   display: flex;
   align-items: center;

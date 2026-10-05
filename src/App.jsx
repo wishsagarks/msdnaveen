@@ -130,6 +130,14 @@ function App() {
   const animWinRate = useAnimatedCounter(currentStats.winRate, analyticsVisible)
 
   const chartCategories = activeProfile.totals
+  const startVideo = (video) => {
+    video.muted = true
+    video.defaultMuted = true
+    video.setAttribute('muted', '')
+    video.setAttribute('playsinline', '')
+    const playRequest = video.play()
+    if (playRequest) playRequest.catch(() => {})
+  }
   const chartOptions = {
     chart: { type: 'areaspline', backgroundColor: 'transparent', height: 270, spacing: [16, 10, 10, 10] },
     title: { text: null },
@@ -231,10 +239,8 @@ function App() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(({ target, isIntersecting }) => {
         const video = target
-        video.muted = true
         if (isIntersecting) {
-          const playRequest = video.play()
-          if (playRequest) playRequest.catch(() => {})
+          startVideo(video)
         } else {
           video.pause()
         }
@@ -242,6 +248,7 @@ function App() {
     }, { threshold: 0.15 })
     videos.forEach(video => {
       video.muted = true
+      video.defaultMuted = true
       observer.observe(video)
     })
     return () => observer.disconnect()
@@ -393,6 +400,7 @@ function App() {
                   }}
                 >
                   <span className="reel-label">{reel.label}</span>
+                  {!videoConsent && <span className="video-tap-hint">Tap to play</span>}
                   <video
                     src={reel.src}
                     poster={reel.poster}
@@ -402,6 +410,8 @@ function App() {
                     playsInline
                     preload={i === 0 ? 'auto' : 'metadata'}
                     aria-label={reel.alt}
+                    onLoadedData={(event) => videoConsent && startVideo(event.currentTarget)}
+                    onCanPlay={(event) => videoConsent && startVideo(event.currentTarget)}
                   />
                 </div>
               ))}
