@@ -48,7 +48,36 @@ const experience = [
   { league: 'Net Bowler — Mysuru Warriors', format: 'KPL 2022', tag: 'Net bowler' },
 ]
 
-const overallStats = { matches: 45, runs: 1240, sr: 145.2, sixes: 85, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 }
+const analyticsProfiles = {
+  batting: {
+    stats: { matches: 319, runs: 5172, sr: 124.63, sixes: 302, wickets: 0, econ: 0, best: '148', winRate: 58 },
+    metrics: [
+      ['Mat', '319'], ['Inns', '248'], ['NO', '71'], ['Runs', '5172'], ['HS', '148'], ['Avg', '29.22'],
+      ['SR', '124.63'], ['30s', '44'], ['50s', '23'], ['100s', '2'], ['4s', '453'], ['6s', '302'],
+      ['Ducks', '20'], ['Won', '186'], ['Loss', '127']
+    ],
+    totals: ['Runs', 'Wickets', 'Sixes', 'Matches'],
+    totalValues: [5172, 0, 302, 319],
+    rates: ['Strike rate', 'Average', 'Win rate'],
+    rateValues: [124.63, 29.22, 58]
+  },
+  bowling: {
+    stats: { matches: 319, runs: 0, sr: 0, sixes: 0, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 },
+    metrics: [['Mat', '319'], ['Inns', '—'], ['Overs', '—'], ['Wkts', '75'], ['Best', '5/16'], ['Econ', '7.3'], ['Avg', '—'], ['SR', '—'], ['4W', '—'], ['5W', '—']],
+    totals: ['Matches', 'Wickets', 'Best figures', 'Economy'],
+    totalValues: [319, 75, 5, 7.3],
+    rates: ['Wickets', 'Economy', 'Win rate'],
+    rateValues: [75, 7.3, 58]
+  },
+  fielding: {
+    stats: { matches: 319, runs: 0, sr: 0, sixes: 0, wickets: 0, econ: 0, best: '—', winRate: 58 },
+    metrics: [['Mat', '319'], ['Inns', '—'], ['Catches', '—'], ['Run outs', '—'], ['Stumpings', '—'], ['Direct hits', '—'], ['Catches / inns', '—'], ['Best match', '—']],
+    totals: ['Matches', 'Catches', 'Run outs', 'Direct hits'],
+    totalValues: [319, 0, 0, 0],
+    rates: ['Catches', 'Run outs', 'Win rate'],
+    rateValues: [0, 0, 58]
+  }
+}
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -82,20 +111,18 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [navScrolled, setNavScrolled] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [analyticsMode, setAnalyticsMode] = useState('batting')
   const [scrollProgress, setScrollProgress] = useState(0)
   const [analyticsVisible, setAnalyticsVisible] = useState(false)
   const analyticsRef = useRef(null)
 
-  const currentStats = overallStats
+  const activeProfile = analyticsProfiles[analyticsMode]
+  const currentStats = activeProfile.stats
 
-  const animRuns = useAnimatedCounter(currentStats.runs, analyticsVisible)
-  const animSr = useAnimatedCounter(currentStats.sr, analyticsVisible, 1)
-  const animWickets = useAnimatedCounter(currentStats.wickets, analyticsVisible)
-  const animEcon = useAnimatedCounter(currentStats.econ, analyticsVisible, 1)
   const animSixes = useAnimatedCounter(currentStats.sixes, analyticsVisible)
   const animWinRate = useAnimatedCounter(currentStats.winRate, analyticsVisible)
 
-  const chartCategories = ['Runs', 'Wickets', 'Sixes', 'Matches']
+  const chartCategories = activeProfile.totals
   const chartOptions = {
     chart: { type: 'areaspline', backgroundColor: 'transparent', height: 270, spacing: [16, 10, 10, 10] },
     title: { text: null },
@@ -116,19 +143,19 @@ function App() {
     tooltip: { shared: true, backgroundColor: '#10231e', borderColor: 'rgba(255,179,71,0.45)', style: { color: '#f6f3e9' } },
     plotOptions: { series: { lineWidth: 2, marker: { radius: 3, lineWidth: 2, lineColor: '#10231e' } }, areaspline: { fillOpacity: 0.12 } },
     series: [
-      { name: 'Overall total', color: '#ffb347', data: [currentStats.runs, currentStats.wickets, currentStats.sixes, currentStats.matches] }
+      { name: 'Overall total', color: '#ffb347', data: activeProfile.totalValues }
     ]
   }
   const impactChartOptions = {
     chart: { type: 'column', backgroundColor: 'transparent', height: 270, spacing: [16, 10, 10, 10] },
     title: { text: null }, credits: { enabled: false }, exporting: { enabled: false },
-    xAxis: { categories: ['Strike rate', 'Economy', 'Win rate'], lineColor: 'rgba(226,239,225,0.12)', tickColor: 'transparent', labels: { style: { color: '#aab9af', fontSize: '11px' } } },
+    xAxis: { categories: activeProfile.rates, lineColor: 'rgba(226,239,225,0.12)', tickColor: 'transparent', labels: { style: { color: '#aab9af', fontSize: '11px' } } },
     yAxis: { title: { text: null }, gridLineColor: 'rgba(226,239,225,0.08)', labels: { style: { color: '#80968a', fontSize: '10px' } } },
     legend: { itemStyle: { color: '#d9e3d9', fontWeight: '500' }, itemHoverStyle: { color: '#ffb347' } },
     tooltip: { shared: true, backgroundColor: '#10231e', borderColor: 'rgba(255,179,71,0.45)', style: { color: '#f6f3e9' } },
     plotOptions: { column: { borderWidth: 0, borderRadius: 3, groupPadding: 0.14, pointPadding: 0.08 } },
     series: [
-      { name: 'Overall rate', color: '#e8cf73', data: [currentStats.sr, currentStats.econ, currentStats.winRate] }
+      { name: 'Overall rate', color: '#e8cf73', data: activeProfile.rateValues }
     ]
   }
 
@@ -358,31 +385,32 @@ function App() {
             </div>
 
             <div className="analytics-container reveal-scale" ref={analyticsRef}>
-              <div className="analytics-grid">
-                <div className="ac ac--saffron">
-                  <span className="ac-label">Runs Scored</span>
-                  <span className="ac-value">{animRuns}</span>
-                  <span className="ac-meta">in {currentStats.matches} match{currentStats.matches !== 1 ? 'es' : ''}</span>
-                  <div className="ac-bar"><div className="ac-bar-fill" style={{ width: `${Math.min((currentStats.runs / 1500) * 100, 100)}%` }} /></div>
-                </div>
-                <div className="ac ac--gold">
-                  <span className="ac-label">Strike Rate</span>
-                  <span className="ac-value">{animSr}</span>
-                  <span className="ac-meta">explosive hitting</span>
-                  <div className="ac-bar"><div className="ac-bar-fill" style={{ width: `${Math.min((currentStats.sr / 200) * 100, 100)}%` }} /></div>
-                </div>
-                <div className="ac ac--green">
-                  <span className="ac-label">Wickets</span>
-                  <span className="ac-value">{animWickets}</span>
-                  <span className="ac-meta">Best: {currentStats.best}</span>
-                  <div className="ac-bar"><div className="ac-bar-fill" style={{ width: `${Math.min((currentStats.wickets / 100) * 100, 100)}%` }} /></div>
-                </div>
-                <div className="ac ac--blue">
-                  <span className="ac-label">Economy Rate</span>
-                  <span className="ac-value">{animEcon}</span>
-                  <span className="ac-meta">tight overs</span>
-                  <div className="ac-bar"><div className="ac-bar-fill" style={{ width: `${Math.max(100 - currentStats.econ * 10, 20)}%` }} /></div>
-                </div>
+              <div className="analytics-tabs" role="tablist" aria-label="Performance categories">
+                {Object.keys(analyticsProfiles).map(key => (
+                  <button
+                    key={key}
+                    className={`analytics-tab${analyticsMode === key ? ' active' : ''}`}
+                    role="tab"
+                    aria-selected={analyticsMode === key}
+                    onClick={() => setAnalyticsMode(key)}
+                  >
+                    {key[0].toUpperCase() + key.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              <div className="analytics-overall-heading">
+                <h3>Overall</h3>
+                <span>{activeProfile.metrics.length} recorded metrics</span>
+              </div>
+
+              <div className="metric-card-grid">
+                {activeProfile.metrics.map(([label, value]) => (
+                  <div className="metric-card" key={label}>
+                    <strong>{value}</strong>
+                    <span>{label}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="chart-row">

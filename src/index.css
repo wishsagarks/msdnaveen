@@ -1334,6 +1334,86 @@ body::before {
   }
 }
 
+/* Stats-browser layout inspired by the reference scorecard. */
+.analytics-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 26px;
+  border-radius: var(--r-pill);
+  background: rgba(226, 239, 225, 0.1);
+}
+.analytics-tab {
+  min-height: 42px;
+  border-radius: var(--r-pill);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s var(--ease-back);
+}
+.analytics-tab:hover { color: var(--text-primary); }
+.analytics-tab.active {
+  color: var(--navy-deep);
+  background: var(--text-primary);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.16);
+}
+.analytics-overall-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.analytics-overall-heading h3 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+.analytics-overall-heading span {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.metric-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.metric-card {
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid rgba(226, 239, 225, 0.08);
+  border-radius: 8px;
+  background: rgba(4, 17, 13, 0.4);
+}
+.metric-card strong {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+.metric-card span {
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+@media (min-width: 520px) {
+  .metric-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .metric-card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .metric-card { min-height: 110px; }
+  .metric-card strong { font-size: 40px; }
+}
+
 /* ================================================================
    LARGE-SCREEN LANDING + ANALYTICS CHARTS
    ================================================================ */
