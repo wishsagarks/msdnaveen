@@ -642,22 +642,6 @@ function App() {
                   if (playRequest) playRequest.catch(() => {})
                 }}
               />
-              <button
-                className="video-modal-sound"
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  const video = event.currentTarget.parentElement.querySelector('video')
-                  video.muted = false
-                  video.defaultMuted = false
-                  video.volume = 1
-                  video.controls = true
-                  const playRequest = video.play()
-                  if (playRequest) playRequest.catch(() => {})
-                }}
-              >
-                🔊 Play with sound
-              </button>
             </div>
           </div>
         )}

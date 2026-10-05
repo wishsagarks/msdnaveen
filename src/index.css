@@ -1589,20 +1589,6 @@ body::before {
   font-size: 12px;
   text-align: center;
 }
-.video-modal-sound {
-  display: block;
-  margin: 10px auto 0;
-  min-height: 38px;
-  padding: 0 18px;
-  border: 1px solid rgba(255, 179, 71, 0.48);
-  border-radius: var(--r-pill);
-  color: var(--navy-deep);
-  background: var(--saffron);
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.video-modal-sound:hover { filter: brightness(1.08); }
 .video-modal-close {
   position: absolute;
   top: 12px;
