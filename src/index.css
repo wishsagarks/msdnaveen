@@ -1648,14 +1648,14 @@ body::before {
   .hero-title { font-size: clamp(82px, 9.6vw, 122px); }
   .hero-content { max-width: 780px; }
   .reel-grid { gap: 14px; }
-  .reel-card.wide { aspect-ratio: 16 / 5.8; }
+  .reel-card.wide { aspect-ratio: 16 / 8; min-height: 390px; }
   .reel-card.tall { aspect-ratio: 9 / 13; }
 }
 
 @media (min-width: 1200px) {
   .hero-title { max-width: 1040px; }
   .reel-grid { gap: 22px; max-width: 1180px; margin-inline: auto; }
-  .reel-card.wide { aspect-ratio: 16 / 5.6; max-height: 410px; }
+  .reel-card.wide { aspect-ratio: 16 / 8; min-height: 470px; max-height: 560px; }
   .reel-card.tall { aspect-ratio: 9 / 13; max-height: 620px; }
 }
 
