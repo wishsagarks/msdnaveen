@@ -622,16 +622,27 @@ function App() {
                 poster={activeReel.poster}
                 autoPlay
                 controls
-                muted={false}
+                muted
                 playsInline
                 preload="auto"
                 aria-label={activeReel.alt}
                 onCanPlay={(event) => {
-                  event.currentTarget.muted = false
+                  // Start muted so iOS Safari permits autoplay; the tap handler below
+                  // is a user gesture and can safely enable audio.
+                  event.currentTarget.muted = true
                   const playRequest = event.currentTarget.play()
                   if (playRequest) playRequest.catch(() => {})
                 }}
+                onClick={(event) => {
+                  const video = event.currentTarget
+                  video.muted = false
+                  video.defaultMuted = false
+                  video.volume = 1
+                  const playRequest = video.play()
+                  if (playRequest) playRequest.catch(() => {})
+                }}
               />
+              <span className="video-modal-audio-hint">Tap the video for sound</span>
             </div>
           </div>
         )}
