@@ -747,8 +747,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 20px;
   }
   .reel-card.wide {
-    grid-column: span 1;
-    aspect-ratio: 9 / 13;
+    grid-column: span 2;
+    aspect-ratio: 16 / 8;
     min-height: 0;
     max-height: none;
   }
@@ -1659,14 +1659,14 @@ body::before {
   .hero-title { font-size: clamp(82px, 9.6vw, 122px); }
   .hero-content { max-width: 780px; }
   .reel-grid { gap: 14px; }
-  .reel-card.wide { aspect-ratio: 9 / 13; }
+  .reel-card.wide { aspect-ratio: 16 / 8; }
   .reel-card.tall { aspect-ratio: 9 / 13; }
 }
 
 @media (min-width: 1200px) {
   .hero-title { max-width: 1040px; }
   .reel-grid { gap: 22px; max-width: 1180px; margin-inline: auto; }
-  .reel-card.wide { aspect-ratio: 9 / 13; }
+  .reel-card.wide { aspect-ratio: 16 / 8; }
   .reel-card.tall { aspect-ratio: 9 / 13; max-height: 620px; }
 }
 
