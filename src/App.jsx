@@ -62,20 +62,20 @@ const analyticsProfiles = {
     rateValues: [124.63, 29.22, 58]
   },
   bowling: {
-    stats: { matches: 319, runs: 0, sr: 0, sixes: 0, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 },
-    metrics: [['Mat', '319'], ['Inns', '—'], ['Overs', '—'], ['Wkts', '75'], ['Best', '5/16'], ['Econ', '7.3'], ['Avg', '—'], ['SR', '—'], ['4W', '—'], ['5W', '—']],
+    stats: { matches: 319, runs: 6903, sr: 22.92, sixes: 115, wickets: 286, econ: 6.32, best: '7/31', winRate: 58 },
+    metrics: [['Mat', '319'], ['Inns', '297'], ['Overs', '1092.4'], ['Maidens', '55'], ['Runs', '6903'], ['Wkts', '286'], ['BB', '7/31'], ['3 Wkts', '22'], ['5 Wkts', '3'], ['Eco', '6.32'], ['SR', '22.92'], ['Avg', '24.14'], ['WD', '732'], ['NB', '117'], ['Dots', '3877'], ['4s', '735'], ['6s', '115']],
     totals: ['Matches', 'Wickets', 'Best figures', 'Economy'],
-    totalValues: [319, 75, 5, 7.3],
-    rates: ['Wickets', 'Economy', 'Win rate'],
-    rateValues: [75, 7.3, 58]
+    totalValues: [319, 286, 7, 6.32],
+    rates: ['Wickets', 'Economy', 'Strike rate'],
+    rateValues: [286, 6.32, 22.92]
   },
   fielding: {
     stats: { matches: 319, runs: 0, sr: 0, sixes: 0, wickets: 0, econ: 0, best: '—', winRate: 58 },
-    metrics: [['Mat', '319'], ['Inns', '—'], ['Catches', '—'], ['Run outs', '—'], ['Stumpings', '—'], ['Direct hits', '—'], ['Catches / inns', '—'], ['Best match', '—']],
-    totals: ['Matches', 'Catches', 'Run outs', 'Direct hits'],
-    totalValues: [319, 0, 0, 0],
-    rates: ['Catches', 'Run outs', 'Win rate'],
-    rateValues: [0, 0, 58]
+    metrics: [['Mat', '319'], ['Catches', '151'], ['C.B', '2'], ['R/O', '35'], ['St', '3'], ['Asst. R/O', '14'], ['Byes', '8']],
+    totals: ['Matches', 'Catches', 'Run outs', 'Stumpings'],
+    totalValues: [319, 151, 35, 3],
+    rates: ['Catches', 'Run outs', 'Assisted R/O'],
+    rateValues: [151, 35, 14]
   }
 }
 
