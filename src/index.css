@@ -1494,6 +1494,57 @@ body::before {
   -webkit-backdrop-filter: blur(14px);
   animation: modalFadeIn 0.22s ease both;
 }
+.video-permission-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(2, 8, 6, 0.76);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modalFadeIn 0.22s ease both;
+}
+.video-permission-panel {
+  width: min(420px, 100%);
+  padding: 28px;
+  border: 1px solid rgba(255, 179, 71, 0.34);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #17372a, #091b15);
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.52);
+}
+.video-permission-kicker {
+  color: var(--saffron);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.video-permission-panel h2 {
+  margin: 9px 0 10px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.video-permission-panel p {
+  margin-bottom: 22px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.video-permission-actions { display: grid; gap: 8px; }
+.video-permission-actions button {
+  min-height: 46px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 700;
+}
+.video-permission-primary { background: var(--saffron); color: var(--navy-deep); }
+.video-permission-secondary { border: 1px solid rgba(246,243,233,0.2); color: var(--text-primary); background: rgba(246,243,233,0.06); }
+.video-permission-panel small { display: block; margin-top: 14px; color: var(--text-muted); font-size: 10px; }
 .video-modal-panel {
   position: relative;
   width: min(960px, 100%);
@@ -1544,6 +1595,8 @@ body::before {
   .video-modal-panel { padding: 12px; border-radius: 10px; }
   .video-modal-panel video { max-height: calc(100svh - 94px); border-radius: 6px; }
   .video-modal-label { font-size: 18px; margin-bottom: 9px; }
+  .video-permission-panel { padding: 24px 20px; }
+  .video-permission-panel h2 { font-size: 30px; }
 }
 
 @media (min-width: 640px) {

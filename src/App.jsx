@@ -116,9 +116,11 @@ function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [analyticsMode, setAnalyticsMode] = useState('batting')
   const [activeReel, setActiveReel] = useState(null)
-  const [videoConsent, setVideoConsent] = useState(() => (
-    typeof window !== 'undefined' && window.localStorage.getItem('msd-video-previews') === 'enabled'
-  ))
+  const [videoConsent, setVideoConsent] = useState(() => {
+    if (typeof window === 'undefined') return null
+    const savedChoice = window.localStorage.getItem('msd-video-previews')
+    return savedChoice === null ? null : savedChoice === 'enabled'
+  })
   const [scrollProgress, setScrollProgress] = useState(0)
   const [analyticsVisible, setAnalyticsVisible] = useState(false)
   const analyticsRef = useRef(null)
@@ -206,6 +208,11 @@ function App() {
     })
   }
 
+  const continueMuted = () => {
+    window.localStorage.setItem('msd-video-previews', 'disabled')
+    setVideoConsent(false)
+  }
+
   useEffect(() => {
     if (!activeReel) return
     const previousOverflow = document.body.style.overflow
@@ -278,6 +285,21 @@ function App() {
       </div>
 
       <div id="app-content" className={!loading ? 'visible' : ''}>
+
+        {!loading && videoConsent === null && (
+          <div className="video-permission-modal" role="dialog" aria-modal="true" aria-labelledby="video-permission-title">
+            <div className="video-permission-panel">
+              <span className="video-permission-kicker">A quick choice</span>
+              <h2 id="video-permission-title">Enable reel previews?</h2>
+              <p>Allow muted video previews to start as you scroll. You can still tap any reel to open it with sound.</p>
+              <div className="video-permission-actions">
+                <button className="video-permission-primary" type="button" onClick={enableVideoPreviews}>Enable previews</button>
+                <button className="video-permission-secondary" type="button" onClick={continueMuted}>Continue muted</button>
+              </div>
+              <small>Your choice is saved only on this device.</small>
+            </div>
+          </div>
+        )}
 
         {/* NAVBAR */}
         <div className={`nav-wrapper${navScrolled ? ' scrolled' : ''}`}>
@@ -370,15 +392,6 @@ function App() {
               <div className="section-label">In Action</div>
               <h2 className="section-title">The Reel</h2>
               <p className="section-desc">Watch the variations in action — mystery spin, deceptive flight, and the power hitting that changes game momentum.</p>
-              {!videoConsent && (
-                <div className="video-consent" role="note">
-                  <div>
-                    <strong>Enable video previews</strong>
-                    <span>One tap starts muted previews on this device.</span>
-                  </div>
-                  <button type="button" onClick={enableVideoPreviews}>Enable</button>
-                </div>
-              )}
             </div>
           </div>
           <div className="container">
@@ -400,7 +413,7 @@ function App() {
                   }}
                 >
                   <span className="reel-label">{reel.label}</span>
-                  {!videoConsent && <span className="video-tap-hint">Tap to play</span>}
+                  {videoConsent !== true && <span className="video-tap-hint">Tap to play</span>}
                   <video
                     src={reel.src}
                     poster={reel.poster}
@@ -609,9 +622,15 @@ function App() {
                 poster={activeReel.poster}
                 autoPlay
                 controls
+                muted={false}
                 playsInline
                 preload="auto"
                 aria-label={activeReel.alt}
+                onCanPlay={(event) => {
+                  event.currentTarget.muted = false
+                  const playRequest = event.currentTarget.play()
+                  if (playRequest) playRequest.catch(() => {})
+                }}
               />
             </div>
           </div>
