@@ -44,9 +44,8 @@ const experience = [
   { league: 'KSCA', format: '2 & 3-Day Leagues', tag: 'League cricket' },
   { league: 'HCA', format: '3-Day Leagues', tag: 'League cricket' },
   { league: 'HCA', format: 'T20 Leagues', tag: 'League cricket' },
-  { league: 'APL', format: 'APL Leagues', tag: 'League cricket' },
-  { league: 'Net Bowler — Royals of Rayalaseema', format: 'RPL 2026', tag: 'Net bowler' },
-  { league: 'Net Bowler — Mysuru Warriors', format: 'KPL 2020', tag: 'Net bowler' },
+  { league: 'Net Bowler — Royals of Rayalaseema', format: 'APL 2026', tag: 'Net bowler' },
+  { league: 'Net Bowler — Mysuru Warriors', format: 'KPL 2022', tag: 'Net bowler' },
 ]
 
 const overallStats = { matches: 45, runs: 1240, sr: 145.2, sixes: 85, wickets: 75, econ: 7.3, best: '5/16', winRate: 58 }
